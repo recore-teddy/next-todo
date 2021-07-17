@@ -4,32 +4,24 @@ import { TodoType } from "../types/todo";
 
 import { getTodosAPI } from "../lib/api/todo";
 
-const todos: TodoType[] = [
-  { id: 1, text: "리덕스 툴킷 학습하기", color: "red", checked: false },
-  { id: 2, text: "수도자처럼 생각하기", color: "orange", checked: false },
-  {
-    id: 3,
-    text: "재택 근무 대비 책상 정리하기",
-    color: "yellow",
-    checked: false,
-  },
-  { id: 4, text: "오늘은 뭐 먹지 고민하기", color: "green", checked: true },
-  { id: 5, text: "책 100페이지 읽기", color: "blue", checked: true },
-  { id: 6, text: "일주일만 굶어보기", color: "navy", checked: false },
-];
+interface IProps {
+  todos: TodoType[];
+}
 
-const app: NextPage = () => {
+const app: NextPage<IProps> = ({ todos }) => {
+  console.log(process.env.NEXT_PUBLIC_API_URL, "클라이언트");
   return <TodoList todos={todos} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const res = await getTodosAPI();
-    console.log(res);
-    return { props: {} };
+    console.log(process.env, "서버");
+    const { data } = await getTodosAPI();
+    console.log(data);
+    return { props: { todos: data } };
   } catch (e) {
     console.log(e);
-    return { props: {} };
+    return { props: { todos: [] } };
   }
 };
 
