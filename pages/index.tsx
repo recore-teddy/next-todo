@@ -1,6 +1,8 @@
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import TodoList from "../components/TodoList";
 import { TodoType } from "../types/todo";
+
+import { getTodosAPI } from "../lib/api/todo";
 
 const todos: TodoType[] = [
   { id: 1, text: "리덕스 툴킷 학습하기", color: "red", checked: false },
@@ -18,6 +20,17 @@ const todos: TodoType[] = [
 
 const app: NextPage = () => {
   return <TodoList todos={todos} />;
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const res = await getTodosAPI();
+    console.log(res);
+    return { props: {} };
+  } catch (e) {
+    console.log(e);
+    return { props: {} };
+  }
 };
 
 export default app;
