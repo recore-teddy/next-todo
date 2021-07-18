@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { TodoType } from "../types/todo";
+
+import { addTodoAPI } from "../lib/api/todo";
 
 import BrushIcon from "../public/statics/svg/brush.svg";
 import palette from "../styles/palette";
@@ -87,6 +90,24 @@ const AddTodo: React.FC = () => {
   const [text, setText] = useState("");
   const [selectedColor, setSelectedColor] = useState<TodoType["color"]>();
 
+  // * 투두 추가하기 API 요청
+
+  const router = useRouter();
+
+  const addTodo = async () => {
+    try {
+      if (!text || !selectedColor) {
+        alert("색상과 할 일을 입력해 주세요.");
+        return;
+      }
+      await addTodoAPI({ text, color: selectedColor });
+      console.log("할 일을 추가했습니다.");
+      router.push("/");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <Container>
       <div className="add-todo-header">
@@ -94,7 +115,7 @@ const AddTodo: React.FC = () => {
         <button
           type="button"
           className="add-todo-submit-button"
-          onClick={() => {}}
+          onClick={addTodo}
         >
           추가하기
         </button>

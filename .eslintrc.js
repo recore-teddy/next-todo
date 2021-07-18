@@ -22,6 +22,7 @@ module.exports = {
     "@typescript-eslint/quotes": ["error", "double"], //더블 쿼터 사용
     "no-unused-vars": "off", //사용안한 변수 경고 중복
     "no-console": "off", // console.log 사용 경고 해제
+    "no-alert": "off",
     "@typescript-eslint/no-unused-vars": "warn", //사용안한 변수는 경고
     "jsx-a11y/control-has-associated-label": "off", // 상호작용하는 엘리먼트에 label을 넣는다
     "react/no-array-index-key": "off", // key값으로 index를 사용할수 있다.
