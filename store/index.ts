@@ -1,7 +1,15 @@
 // import { createStore, applyMiddleware, combineReducers } from "redux";
+import {
+  TypedUseSelectorHook,
+  useSelector as useReduxSelector,
+} from "react-redux";
 import { HYDRATE, createWrapper } from "next-redux-wrapper";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import todo from "./todo";
+
+// declare module "react-redux" {
+//   interface DefaultRootState extends RootState {}
+// }
 
 // * with-redux-wrapper 예제를 참고하여 만든 Redux Store
 const rootReducer = combineReducers({
@@ -40,6 +48,9 @@ export type RootState = ReturnType<typeof rootReducer>;
 const initStore = () => {
   return configureStore({ reducer, devTools: true });
 };
+
+// * 타입 지원되는 커스텀 useSelector 만들기
+export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
 
 // * 공통 페이지 App 컴포넌트에서 wrapper 로 사용하기 위해,
 // * 'next-redux-wrapper' 에서 createWrapper 를 import 하여 wrapper를 만듬

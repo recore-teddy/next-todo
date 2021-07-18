@@ -1,7 +1,11 @@
 import React, { useMemo, useState } from "react";
-// import { useRouter } from "next/dist/client/router";
 import styled from "styled-components";
-import { TodoType } from "../types/todo";
+// import { useRouter } from "next/dist/client/router";
+// import { useSelector } from "react-redux";
+import { useSelector } from "../store";
+// import { RootState } from "../store";
+
+// import { TodoType } from "../types/todo";
 import palette from "../styles/palette";
 
 import { checkTodoAPI, deleteTodoAPI } from "../lib/api/todo";
@@ -9,9 +13,9 @@ import { checkTodoAPI, deleteTodoAPI } from "../lib/api/todo";
 import TrashCanIcon from "../public/statics/svg/trash_can.svg";
 import CheckMarkIcon from "../public/statics/svg/check_mark.svg";
 
-interface IProps {
-  todos: TodoType[];
-}
+// interface IProps {
+//   todos: TodoType[];
+// }
 
 type ObjectIndexType = {
   [key: string]: number | undefined; // ObjectIndexType 타입에 [key] 의 값으로 number | undefined 라는 타입 지정.
@@ -132,7 +136,8 @@ const Container = styled.div`
   }
 `;
 
-const TodoList: React.FC<IProps> = ({ todos }) => {
+const TodoList: React.FC = () => {
+  const todos = useSelector((state) => state.todo.todos);
   const [localTodos, setLocalTodos] = useState(todos);
 
   const todoColorNums = useMemo(() => {
